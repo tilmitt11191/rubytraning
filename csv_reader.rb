@@ -13,7 +13,7 @@ print(str, "\n")
 
 class A
 	def one
-		1
+		2	
 	end
 end
 
