@@ -1,4 +1,5 @@
 
+
 print "readcsv.rb start\n"
 require "csv" 
 #/cygdrive/f/Dropbox/pc/workingtower/home/dropbox/program/ruby/rubytraning
