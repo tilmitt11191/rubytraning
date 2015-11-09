@@ -4,12 +4,12 @@ print "readcsv.rb start\n"
 require "csv" 
 #/cygdrive/f/Dropbox/pc/workingtower/home/dropbox/program/ruby/rubytraning
 
-str = "this is" << "\n" + "readcsv" * 2 + "\n"
+str = "this is" << "\n" + "csv_reader" * 2 + "\n"
 print(str, "\n")
 
-#CSV.foreach("null-output.csv") do |row|
-#	print row
-#end
+CSV.foreach("data/null-output.csv") do |row|
+	print row
+end
 
 class A
 	def one
