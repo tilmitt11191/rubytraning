@@ -9,16 +9,6 @@ print(str, "\n")
 CSV.foreach("data/null-output.csv", encoding: "Shift_JIS:UTF-8") do |row|
 	print row
 end
-
-class A
-	def one
-		2	
-	end
-end
-
-a = A.new
-p a.one
-
 #csv_line_read02=[]
 #csv_line_read01 = []
 #CSV.open("data/null-output.csv")
