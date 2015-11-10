@@ -2,12 +2,11 @@
 
 print "readcsv.rb start\n"
 require "csv" 
-#/cygdrive/f/Dropbox/pc/workingtower/home/dropbox/program/ruby/rubytraning
 
 str = "this is" << "\n" + "csv_reader" * 2 + "\n"
 print(str, "\n")
 
-CSV.foreach("data/null-output.csv") do |row|
+CSV.foreach("data/null-output.csv", encoding: "Shift_JIS:UTF-8") do |row|
 	print row
 end
 
