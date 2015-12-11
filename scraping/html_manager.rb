@@ -40,12 +40,12 @@ class HTML_manager
 	end
 
 	def output_row_data(output_file_name)
-		#File.open(output_file_name, "w")do |file|
+		File.open(output_file_name, "w")do |file|
 			File.open(@input_row_data, "r") do |row|
 				p row
 				file << row
 			end
-		#end
+		end
 	end
 
 	##def read_***
