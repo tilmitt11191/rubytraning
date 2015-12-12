@@ -13,6 +13,8 @@ module Get_song_list_from_website_tsutaya
 		i = 1
 		while true
 			log.info "searching PN[" + i.to_s + "]"
+			html=HTML_manager.new(search_url+"&PN" +i.to_s ,cookie,default_charset)
+			p html.get_title
 			if i == 6 then
 				break
 			end
