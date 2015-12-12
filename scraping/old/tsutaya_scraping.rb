@@ -1,29 +1,10 @@
 
+#ruby 2.0.0
 #ruby 2.1.5p273 (2014-11-13) [x86_64-linux-gnu]
-require	"logger"
-
-require_relative "get_song_list_from_website.rb"
-include Get_song_list_from_website_tsutaya
+require_relative "html_manager.rb"
+require_relative "singer_manager.rb"
 
 ## main
-@log = Logger.new("log", shift_size = 1048576)
-@log.info "tsutaya_scraping.rb main start"
-
-@singer = "Carpenters"
-@search_Carpenters_url="http://movie-tsutaya.tsite.jp/netdvd/cd/searchCd.do?k=%83J%81%5B%83y%83%93%83%5E%81%5B%83Y"
-@cookie = "~/cdrive_work/Users/tilmi_000/AppData/Local/Google/Chrome/User\ Data/Profile\ 1/Cookies"
-@default_charset="Shift_JIS"
-@searched_pages #HTML_manager array[]
-
-create_serched_pages(@search_Carpenters_url, @cookie, @default_charset, @searched_pages)
-
-
-
-
-@log.info "tsutaya_scraping.rb main finished"
-exit 0
-
-=begin
 @cookie = "~/Library/Application\ Support/Google/Chrome/Default/Cookies"
 @default_charset="Shift_JIS"
 #@top_url="http://movie-tsutaya.tsite.jp/netdvd/vod/top.do"
@@ -62,4 +43,3 @@ exit 0
 #http://movie-tsutaya.tsite.jp/netdvd/cd/searchCd.do?k=%83J%81%5B%83y%83%93%83%5E%81%5B%83Y
 #http://movie-tsutaya.tsite.jp/netdvd/cd/searchCd.do?K=%83%4A%81%5B%83%79%83%93%83%5E%81%5B%83%59&PN=2
 #http://movie-tsutaya.tsite.jp/netdvd/cd/goodsDetail.do?pT=null&titleID=0000137797
-=end
