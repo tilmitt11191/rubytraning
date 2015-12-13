@@ -20,11 +20,13 @@ include Get_song_list_from_website_tsutaya
 @searched_pages.each do |html|
 	cd_list = create_CD(html)
 	cd_list.each do |cd|
-		@singer.add_cd( get_songs(cd) )
+		cd_with_songs = get_songs(cd)
+		formed_cd =  format_song_list(cd_with_songs)
+		@singer.add_cd(formed_cd)
 	end
 end
 
-@singer.create_all_song_list_to("carpenters.csv", "Shift_JIS")
+@singer.create_all_song_list_to("data/carpenters/carpenters.csv", "Shift_JIS")
 
 @log.info "test_tsutaya_scraping.rb main finished"
 exit 0
