@@ -116,7 +116,7 @@ module Get_song_list_from_website_tsutaya
 			#end
 			@cd.songs.push("aaa")
 		end
-		
+		@cd.songs.push("iii")
 		@cd.songs do |song|
 			p song
 		end
