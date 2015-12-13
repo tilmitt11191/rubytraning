@@ -2,12 +2,12 @@
 #ruby 2.1.5p273 (2014-11-13) [x86_64-linux-gnu]
 require	"logger"
 
+require_relative "singer.rb"
 require_relative "get_song_list_from_website.rb"
 include Get_song_list_from_website_tsutaya
 
 ## main
-@log = Logger.new("etc/log", shift_size = 524288) #allocate logfile. size is smaller than other logger.
-@log = Logger.new("etc/log", shift_size = 1048576)
+@log = Logger.new("etc/log")
 @log.info "\n\ntsutaya_scraping.rb main start"
 
 @singer = "Carpenters"
@@ -46,10 +46,26 @@ include Get_song_list_from_website_tsutaya
 @html.output_input_file("output.txt")
 
 @cd_with_songs = get_songs(@cd)
-p @cd_with_songs.title
-@cd_with_songs.songs do |song|
+#p @cd_with_songs.title
+#@cd_with_songs.songs.each do |song|
+	#p song
+#end
+
+@cd_with_songs = format_song_list(@cd_with_songs)
+@cd_with_songs.songs.each do |song|
 	p song
 end
+
+
+#### test of write_song_list_to(file)
+#@cd_with_songs.write_song_list_to("songlist.csv")
+#@cd_with_songs.write_song_list_to("songlist.csv","Shift_JIS")
+
+####test of add_cd
+#@carpenters = Singer.new("Carpenters")
+#@carpenters.add_cd(@cd_with_songs)
+#p @carpenters.CDs.size
+#@carpenters.create_all_song_list_to("carpenters.csv", "Shift_JIS")
 
 
 

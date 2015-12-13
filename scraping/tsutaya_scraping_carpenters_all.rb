@@ -20,9 +20,7 @@ include Get_song_list_from_website_tsutaya
 @searched_pages.each do |html|
 	cd_list = create_CD(html)
 	cd_list.each do |cd|
-		cd_with_songs = get_songs(cd)
-		formed_cd =  format_song_list(cd_with_songs)
-		@singer.add_cd(formed_cd)
+		@singer.add_cd( get_songs(cd) )
 	end
 end
 

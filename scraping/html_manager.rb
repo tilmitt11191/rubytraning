@@ -22,7 +22,7 @@ class HTML_manager
 	attr_reader :property
 	
 	def initialize(input_url, cookie, charset, site_identifier, property)
-		@log = Logger.new("etc/log", shift_size = 1048576)
+		@log = Logger.new("etc/log")
 		@log.info "[class HTML_manager] initialize start"
 		@log.info "input_url: "+ input_url
 		@log.info "cookie: " + cookie

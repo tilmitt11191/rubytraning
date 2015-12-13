@@ -6,7 +6,7 @@ require_relative "cd.rb"
 
 module Get_song_list_from_website_tsutaya
 	def create_serched_pages(search_url, cookie, default_charset)
-		log = Logger.new("etc/log", shift_size = 1048576)
+		log = Logger.new("etc/log")
 		log.info "[module get_song_list_from_website_tsutaya].create_serched_pages start"
 		log.info "serch_url: " + search_url
 		log.info "cookie: " + cookie
@@ -33,7 +33,7 @@ module Get_song_list_from_website_tsutaya
 
 
 	def create_CD(html)
-		log = Logger.new("etc/log", shift_size = 1048576)
+		log = Logger.new("etc/log")
 		log.info "[module get_song_list_from_website_tsutaya].create_CD start"
 		
 		cd_list = []
@@ -55,7 +55,7 @@ module Get_song_list_from_website_tsutaya
 
 
 	def get_cd_list(html)
-		log = Logger.new("etc/log", shift_size = 1048576)
+		log = Logger.new("etc/log")
 		log.info "[module get_song_list_from_website_tsutaya].get_cd_list start"
 
 		cd_list = {} # hash str 
@@ -92,7 +92,7 @@ module Get_song_list_from_website_tsutaya
 
 
 	def get_songs(cd)
-		log = Logger.new("etc/log", shift_size = 1048576)
+		log = Logger.new("etc/log")
 		log.info "[module get_song_list_from_website_tsutaya].get_songs start"
 		log.info "cd.title: " + cd.title
 		log.info "cd.webpages["+cd.titleID+"]: " + cd.webpages["tsutaya-discas"].property
@@ -104,22 +104,15 @@ module Get_song_list_from_website_tsutaya
 			log.warn "html is nill"
 		else
 			log.info "get songs from "+@html.input_url
-			#cd_url = "http://movie-tsutaya.tsite.jp/netdvd/cd/goodsDetail.do?pT=null&titleID=" + titleID
-			#cd = CD.new(titleID, title)
-			#webpage = HTML_manager.new(cd_url, html.cookie, html.charset, "tsutaya-discas", titleID)
-			#array = html.input_file.css('.tblColType01Cell01').css('a')
-			#array.each do |line|
-			#titleID = get_titleID line[:href]
-			#title = line.children.attribute("alt").to_s
-			#cd_list[titleID] = title
-			#@log.info ("titleID[" + titleID + "] title[" + title + "]")
-			#end
-			@cd.songs.push("aaa")
+			songs_array = @html.input_file.css('.zebla/td/ul/li')
+			songs_array.each do |song_element|
+				song = song_element.inner_text
+				song.gsub!(/(\s)/,"") #remove CRLF, space
+				song.gsub!(/(\t)/,"") #remove tab
+				@cd.songs.push song
+			end
 		end
-		@cd.songs.push("iii")
-		@cd.songs do |song|
-			p song
-		end
+
 		log.info "[module get_song_list_from_website_tsutaya].get_songs finished"
 		return @cd
 	end
@@ -127,7 +120,7 @@ module Get_song_list_from_website_tsutaya
 	
 	
 	def get_html(cd)
-		log = Logger.new("etc/log", shift_size = 1048576)
+		log = Logger.new("etc/log")
 		log.info "[module get_song_list_from_website_tsutaya].get_html start"
 		log.info "cd.title: " + cd.title
 		log.info "cd.titleID: " + cd.titleID
@@ -137,6 +130,36 @@ module Get_song_list_from_website_tsutaya
 		end
 		log.info "[module get_song_list_from_website_tsutaya].get_html finished"
 		return html
+	end
+	
+	
+	
+	def format_song_list(cd)
+		log = Logger.new("etc/log")
+		log.info "[module get_song_list_from_website_tsutaya].format_song_list start"
+		log.info "cd title: " + cd.title.to_s
+		formed_songs = []
+		cd.songs.each do |song|
+			formed_song = song
+			log.info "\nsong: " + song.to_s
+			#### format
+			formed_song.gsub!(/(\s)/,"") #remove CRLF, space
+			formed_song.gsub!(/(\t)/,"") #remove tab
+			#formed_song.sub!(/\A\d/,"") # remove head number.
+			while /\A\d/ =~ formed_song do
+				formed_song.sub!(/\A\d/,"")
+			end
+			formed_song.sub!(/\A\./){$1} # remove head [.].
+			formed_song.sub!(/(.*)\(.*/){$1} # remove after last [(].
+			
+			####
+			log.info "\nformed_song: " + formed_song.to_s
+			formed_songs.push formed_song
+		end
+		formed_cd = cd
+		formed_cd.songs = formed_songs
+		log.info "[module get_song_list_from_website_tsutaya].format_song_list finished"
+		return formed_cd
 	end
 
 end
