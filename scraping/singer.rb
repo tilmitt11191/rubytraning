@@ -12,7 +12,7 @@ class Singer
 	@songs #hash[] key=song, value=CDtitle1,CDtitle2,...
 	
 	def initialize
-		@log = Logger.new("log", shift_size = 1048576)
+		@log = Logger.new("etc/log", shift_size = 1048576)
 		@log.info "[class Singer] initialize start"
 		
 		@log.info "[class Singer] initialize finish"

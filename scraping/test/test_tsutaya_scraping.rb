@@ -16,10 +16,10 @@ include Get_song_list_from_website_tsutaya
 @default_charset="Shift_JIS"
 
 @searched_pages = create_serched_pages(@search_Carpenters_url, @cookie, @default_charset)
-
-@searched_pages.each do |html|
-	create_CD(html)
-end
+p @searched_pages[0].get_title
+#@searched_pages.each do |html|
+#	create_CD(html)
+#end
 
 
 

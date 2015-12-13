@@ -15,16 +15,45 @@ include Get_song_list_from_website_tsutaya
 @cookie = "~/cdrive_work/Users/tilmi_000/AppData/Local/Google/Chrome/User\ Data/Profile\ 1/Cookies"
 @default_charset="Shift_JIS"
 
-@searched_pages = create_serched_pages(@search_Carpenters_url, @cookie, @default_charset)
+#################################
+## html sample
+@test_url="http://movie-tsutaya.tsite.jp/netdvd/cd/searchCd.do?k=%83J%81%5B%83y%83%93%83%5E%81%5B%83Y"
+@cookie = "~/cdrive_work/Users/tilmi_000/AppData/Local/Google/Chrome/User\ Data/Profile\ 1/Cookies"
+@default_charset="Shift_JIS"
+@html = HTML_manager.new(@test_url, @cookie, @default_charset, "test_tsutaya-discas", "cd")
 
-@searched_pages.each do |html|
-	create_CD(html)
+## cd sample
+@cd = CD.new("1128488787", "40/40")
+@cd.webpages["tsutaya-discas"] = @html
+
+
+#################################
+#### test of create_CD
+#@searched_pages = create_serched_pages(@search_Carpenters_url, @cookie, @default_charset)
+#@html =  @searched_pages[0]
+#@cd_list = create_CD(@html)
+#@cd_list.each do |cd|
+#	p cd.title
+#end
+
+#### test of get_songs
+@test_url="http://movie-tsutaya.tsite.jp/netdvd/cd/goodsDetail.do?pT=null&titleID=1128488787"
+@cookie = "~/cdrive_work/Users/tilmi_000/AppData/Local/Google/Chrome/User\ Data/Profile\ 1/Cookies"
+@default_charset="Shift_JIS"
+@html = HTML_manager.new(@test_url, @cookie, @default_charset, "test_tsutaya-discas", "cd")
+@cd = CD.new("1128488787", "40/40")
+@cd.webpages["tsutaya-discas"] = @html
+@html.output_input_file("output.txt")
+
+@cd_with_songs = get_songs(@cd)
+p @cd_with_songs.title
+@cd_with_songs.songs do |song|
+	p song
 end
 
 
 
-
-@log.info "tsutaya_scraping.rb main finished"
+@log.info "test_tsutaya_scraping.rb main finished"
 exit 0
 
 =begin
