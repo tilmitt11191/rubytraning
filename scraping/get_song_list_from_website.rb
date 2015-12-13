@@ -16,12 +16,17 @@ module Get_song_list_from_website_tsutaya
 		i = 1
 		while true
 			log.info "searching PN[" + i.to_s + "]"
-			html=HTML_manager.new(search_url+"&PN" +i.to_s ,cookie,default_charset, "tsutaya-discas", "cd")
+			html=HTML_manager.new(search_url+"&PN=" +i.to_s ,cookie,default_charset, "tsutaya-discas", "cd")
 			#p html.get_title
-			searched_pages.push(html)
-			if i == 6 then
+			#print "i = " + i.to_s + "\n"
+			#print html.input_file.css('.columnErrType01Txt01').inner_text + "\n"
+			if html.input_file.css('.columnErrType01Txt01').inner_text.include?("見つかりませんでした") then
+				log.info "break at i="+ i.to_s
+				log.info "html.input_file.css('.columnErrType01Txt01') =\n" + html.input_file.css('.columnErrType01Txt01').inner_text
+				log.info "include (見つかりませんでした)"
 				break
 			end
+			searched_pages.push(html)
 			i += 1
 		end
 		
