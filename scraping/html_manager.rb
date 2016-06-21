@@ -8,14 +8,14 @@ class HTML_manager
 	#var
 	@log
 	@input_url
+	@input_row_data
 	@input_file
 	@cookie
 	@charset
 	@site_identifier
 	@property
 
-	attr_reader :input_url
-	attr_reader :input_file
+	attr_reader :input_url, :input_row_data, :input_file
 	attr_reader :cookie
 	attr_reader :charset
 	attr_reader :site_identifier
@@ -33,7 +33,7 @@ class HTML_manager
 		@site_identifier = site_identifier
 		@property = property
 
-		input_row_data = open(input_url, { 'Cookie' => cookie })
+		@input_row_data = open(input_url, { 'Cookie' => cookie })
 		@input_file = Nokogiri::HTML.parse(input_row_data, input_url, charset)
 		
 		@log.info "[class HTML_manager] initialize finish"
@@ -53,7 +53,7 @@ class HTML_manager
 	def output_input_file(output_file_name)
 		@log.info("output_input_file "+ @input_file.title + " to " + output_file_name)
 		File.open(output_file_name, "w") do |file|
-			file.write @input_file
+			file.write @input_row_data.read
 		end
 	end
 

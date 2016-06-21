@@ -1,7 +1,0 @@
-
-#bash
-cd `dirname $0`
-git rm ../etc/log
-rm ../etc/log
-find ../etc -name "log.*" -print0 | xargs -0 git rm
-find ../etc -name "log.*" -print0 | xargs -0 rm

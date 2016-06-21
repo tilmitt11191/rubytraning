@@ -4,6 +4,16 @@ require	"logger"
 require_relative "html_manager.rb"
 require_relative "cd.rb"
 
+module Get_html_file
+	def create_serched_page(search_url, cookie, default_charset)
+		log = Logger.new("etc/log")
+		log.info "[module get_song_list_from_website_tsutaya].create_serched_pages start"
+		log.info "serch_url: " + search_url
+		log.info "cookie: " + cookie
+		html=HTML_manager.new(serch_url, cookie, default_charset, "", "")
+	end
+end
+
 module Get_song_list_from_website_tsutaya
 	def create_serched_pages(search_url, cookie, default_charset)
 		log = Logger.new("etc/log")
